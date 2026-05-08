@@ -14,3 +14,16 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 - A background worker moniters this job queue.
 - Any new file that is sent into the job queue, is taken by worker and split into chunks.
 - The chunks are then embedded into vectors and stored in a vector database.
+
+### The embedding phase
+
+- The system uses Ollama to run embedding models locally.
+
+## How to start the project
+
+You will have to start the following services:
+
+- The main server
+- The frontend server
+- The background worker (worker.js)
+- The Docker compose file environment

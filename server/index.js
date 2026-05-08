@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import { Queue } from 'bullmq';
+import { QdrantVectorStore } from "@langchain/qdrant";
+import { OllamaEmbeddings } from "@langchain/ollama";
 
 const queue = new Queue('file-upload-queue');
 
@@ -35,6 +37,36 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
     }
   ));
   return res.json({ message: 'uploaded' });
+});
+
+app.get('/chat', async (req, res) => {
+  const userQuery = "What are the references used in this document?";
+
+  const embedings = new OllamaEmbeddings({
+    model: "nomic-embed-text",
+  });
+
+  const vectorStore = await QdrantVectorStore.fromExistingCollection(
+    embedings,
+    {
+      url: "http://localhost:6333",
+      collectionName: "pdf-docs",
+    }
+  );
+
+  const ret = vectorStore.asRetriever({
+    k: 2,
+  });
+
+  const result = await ret.invoke(userQuery);
+
+  const SYSTEM_PROMPT = `
+    You are a helpful AI Assistant who answers the user query based on the available context from PDF file.
+    Context:
+    ${JSON.stringify(result)}
+  `;
+
+  return res.json({ result });
 });
 
 app.listen(8000, () => console.log(`Server started on PORT:${8000}`));

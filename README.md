@@ -19,7 +19,19 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 
 - The system uses Ollama to run embedding models locally.
 
-## How to start the project
+## Tech stack
+
+- Backend: Express.js
+- Frontend: Next.js
+- Vector DB: Qdrant
+- Embeddings model: nomic-embed-text
+- Embeddings model orchestration: Ollama
+- LLM: Langchain
+
+## How to start the projects
+
+- Install the dependencies for bnth server and client folders.
+- Install Ollama and pull the nomic-embed-text model.
 
 You will have to start the following services:
 

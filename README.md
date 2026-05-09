@@ -19,6 +19,10 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 
 - The system uses Ollama to run embedding models locally.
 
+## How can you see the existing collections in the vector DB?
+
+Simply visit "localhost:6333/dashboard/#collections".
+
 ## Tech stack
 
 - Backend: Express.js
@@ -36,6 +40,28 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 You will have to start the following services:
 
 - The main server
+
+```
+cd server
+npx nodemon index.js
+```
+
 - The frontend server
+
+```
+cd client
+npm run dev
+```
+
 - The background worker (worker.js)
+
+```
+cd server
+npm run dev:worker
+```
+
 - The Docker compose file environment
+
+```
+docker compose up -d
+```

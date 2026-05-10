@@ -41,7 +41,7 @@ const ChatComponent: React.FC = () => {
         {messages.map((message, index) => (
           <div
             className={`
-              p-2 max-w-112.5 rounded-xl
+              p-3 flex-none max-w-[60%] rounded-xl
               ${message.role == "user" ? "bg-gray-300 ml-auto" : ""}
             `}
             key={index}

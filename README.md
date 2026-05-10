@@ -18,6 +18,7 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 ### The embedding phase
 
 - The system uses Ollama to run embedding models locally.
+- The generated embeddings are stored in Qdrant DB in a dedicated Collection called "pdf-docs".
 
 ## How can you see the existing collections in the vector DB?
 

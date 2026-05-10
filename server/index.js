@@ -1,9 +1,12 @@
+import { config } from 'dotenv';
+config();
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import { Queue } from 'bullmq';
 import { QdrantVectorStore } from "@langchain/qdrant";
 import { OllamaEmbeddings } from "@langchain/ollama";
+import { ChatGroq } from '@langchain/groq';
 
 const queue = new Queue('file-upload-queue');
 
@@ -60,13 +63,33 @@ app.get('/chat', async (req, res) => {
 
   const result = await ret.invoke(userQuery);
 
+  const llm = new ChatGroq({
+    apiKey: process.env.GROQ_API_KEY,
+    model: "llama-3.1-8b-instant",
+    temperature: 0,
+  });
+
   const SYSTEM_PROMPT = `
     You are a helpful AI Assistant who answers the user query based on the available context from PDF file.
     Context:
     ${JSON.stringify(result)}
   `;
 
-  return res.json({ result });
+  const response = await llm.invoke([
+    {
+      role: "system",
+      content: SYSTEM_PROMPT,
+    },
+    {
+      role: "user",
+      content: userQuery,
+    },
+  ]);
+
+  return res.json({
+    answer: response.content,
+    docs: result,
+  });
 });
 
 app.listen(8000, () => console.log(`Server started on PORT:${8000}`));

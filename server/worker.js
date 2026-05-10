@@ -34,6 +34,8 @@ const worker = new Worker(
             model: "nomic-embed-text",
         });
 
+        console.log('Embedding model loaded');
+
         // Use the embeddings with Qdrant
         const vectorStore = await QdrantVectorStore.fromDocuments(
             docs,
@@ -44,9 +46,9 @@ const worker = new Worker(
             }
         );
 
-        console.log('sdvdvv');
+        console.log('Embedding stored');
     },
-    { concurrency: 100, connection: {
+    { concurrency: 1, connection: {
         host: 'localhost',
         port: '6379'
     } }

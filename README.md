@@ -23,14 +23,25 @@ The PDF RAG system allows a user to upload a PDF document and then ask questions
 
 Simply visit "localhost:6333/dashboard/#collections".
 
+## How to pull the models for Ollama?
+
+Simply pull the models by entering the following commands into your terminal:
+
+```
+ollama pull nomic-embed-text
+```
+
 ## Tech stack
 
 - Backend: Express.js
 - Frontend: Next.js
+- Queue: BullMQ
+- Key-value store: Valkey
 - Vector DB: Qdrant
 - Embeddings model: nomic-embed-text
 - Embeddings model orchestration: Ollama
-- LLM: Langchain
+- LLM orchestration: Langchain
+- LLM: llama-3.1-8b-instant on Groq API with Langchain
 
 ## How to start the projects
 
@@ -42,26 +53,34 @@ You will have to start the following services:
 - The main server
 
 ```
+
 cd server
 npx nodemon index.js
+
 ```
 
 - The frontend server
 
 ```
+
 cd client
 npm run dev
+
 ```
 
 - The background worker (worker.js)
 
 ```
+
 cd server
 npm run dev:worker
+
 ```
 
 - The Docker compose file environment
 
 ```
+
 docker compose up -d
+
 ```

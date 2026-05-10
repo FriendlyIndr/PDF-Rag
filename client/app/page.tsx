@@ -1,4 +1,5 @@
 import FileUploadComponent from "./components/file-upload";
+import ChatComponent from "./components/chat";
 
 export default function Home() {
   const handleFileUploadButtonClick = () => {
@@ -14,7 +15,9 @@ export default function Home() {
         <div className="w-[30vw] p-4 flex items-center justify-center">
           <FileUploadComponent />
         </div>
-        <div className="w-[70vw] border-l-2"></div>
+        <div className="w-[70vw] border-l-2">
+          <ChatComponent />
+        </div>
       </div>
     </div>
   );

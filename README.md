@@ -35,6 +35,7 @@ ollama pull nomic-embed-text
 
 - Backend: Express.js
 - Frontend: Next.js
+- Frontend library: ShadCN
 - Queue: BullMQ
 - Key-value store: Valkey
 - Vector DB: Qdrant

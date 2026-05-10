@@ -43,7 +43,7 @@ app.post('/upload/pdf', upload.single('pdf'), async (req, res) => {
 });
 
 app.get('/chat', async (req, res) => {
-  const userQuery = "What are the references used in this document?";
+  const userQuery = req.query.message;
 
   const embedings = new OllamaEmbeddings({
     model: "nomic-embed-text",

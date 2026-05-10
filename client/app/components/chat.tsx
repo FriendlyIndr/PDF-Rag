@@ -15,7 +15,7 @@ interface Doc {
 }
 
 interface IMessage {
-  role: "assitant" | "user";
+  role: "assistant" | "user";
   content?: string;
   documents?: Doc[];
 }
@@ -28,20 +28,29 @@ const ChatComponent: React.FC = () => {
     setMessages((prev) => [...prev, { role: "user", content: message }]);
     const res = await fetch(`http://localhost:8000/chat?message=${message}`);
     const data = await res.json();
+    console.log(data);
     setMessages((prev) => [
       ...prev,
-      { role: "assitant", content: data?.answer, documents: data?.docs },
+      { role: "assistant", content: data?.answer, documents: data?.docs },
     ]);
   };
 
   return (
     <div className="p-4">
-      <div>
+      <div className="flex flex-col gap-2 justify-end">
         {messages.map((message, index) => (
-          <pre key={index}>{JSON.stringify(message)}</pre>
+          <div
+            className={`
+              p-2 max-w-112.5 rounded-xl
+              ${message.role == "user" ? "bg-gray-300 ml-auto" : ""}
+            `}
+            key={index}
+          >
+            {message.content}
+          </div>
         ))}
       </div>
-      <div className="fixed bottom-4 w-100 flex gap-3">
+      <div className="fixed bottom-4 w-[65%] flex gap-3">
         <Input
           placeholder="Type your message here"
           value={message}
